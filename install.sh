@@ -12,7 +12,7 @@ SOURCE_CACHE_DIR="${SOURCE_CACHE_DIR:-/tmp}"
 API_KEY="${API_KEY:-}"
 SECRET_KEY="${SECRET_KEY:-}"
 ENV_FILE="$DEPLOY_DIR/.env"
-COMPOSE_SRC="$SCRIPT_DIR/docker-compose.oracle.yml"
+COMPOSE_SRC="$SCRIPT_DIR/docker-compose.rhel.yml"
 COMPOSE_DST="$DEPLOY_DIR/docker-compose.yml"
 SYSTEMD_UNIT="/etc/systemd/system/libretime-compose.service"
 
@@ -33,8 +33,9 @@ fi
 
 # shellcheck disable=SC1091
 source /etc/os-release
-if [[ "${ID:-}" != "ol" ]]; then
-  echo "Warning: This installer is tuned for Oracle Linux. Detected ID=${ID:-unknown}."
+supported_ids=("ol" "rhel" "rocky" "fedora" "centos" "alma")
+if [[ ! " ${supported_ids[@]} " =~ " ${ID:-} " ]]; then
+  echo "Warning: This installer is tuned for RHEL-family and Fedora distributions. Detected ID=${ID:-unknown}."
 fi
 
 prompt_required() {
@@ -99,10 +100,13 @@ case "${BUILD_LIBRETIME_IMAGES,,}" in
 esac
 
 echo "Installing container tooling..."
-OL_MAJOR="${VERSION_ID%%.*}"
-if [[ "$OL_MAJOR" == "8" ]]; then
-  sudo dnf -y module install container-tools:ol8
+if [[ "$ID" == "fedora" ]]; then
+  sudo dnf -y install podman podman-compose gettext curl openssl
+elif [[ "${VERSION_ID%%.*}" == "8" ]]; then
+  sudo dnf -y module install container-tools:el8
   sudo dnf -y install podman-compose gettext curl openssl
+elif [[ "${VERSION_ID%%.*}" == "9" ]]; then
+  sudo dnf -y install podman podman-compose gettext curl openssl
 else
   sudo dnf -y install container-tools podman-compose gettext curl openssl
 fi

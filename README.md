@@ -1,11 +1,11 @@
-# LibreTime Podman Installer (Oracle Linux)
+# LibreTime Podman Installer (RHEL-family & Fedora)
 
-This directory contains a scripted LibreTime deployment for Oracle Linux using Podman Compose.
+This directory contains a scripted LibreTime deployment for RHEL-family distributions (RHEL, Rocky Linux, AlmaLinux, Oracle Linux) and Fedora using Podman Compose.
 
 ## Files
 
 - `install.sh`: End-to-end installer and bootstrap script.
-- `docker-compose.oracle.yml`: Compose template copied to `/opt/libretime/docker-compose.yml`.
+- `docker-compose.rhel.yml`: Compose template copied to `/opt/libretime/docker-compose.yml`.
 
 ## What `install.sh` does
 
@@ -24,7 +24,7 @@ This directory contains a scripted LibreTime deployment for Oracle Linux using P
 
 ## Prerequisites
 
-- Oracle Linux host (script is tuned for OL; warns on other distros).
+- RHEL-family (RHEL, Rocky Linux, AlmaLinux, Oracle Linux) or Fedora host (script is tuned for these; warns on other distros).
 - `sudo` access.
 - Outbound network access to:
   - `github.com` (release tarball and templates)
