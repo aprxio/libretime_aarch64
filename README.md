@@ -152,6 +152,24 @@ Expected:
 - Containers attached to `libretime_default`
 - Service names resolve (`postgres`, `rabbitmq`, `nginx`, etc.)
 
+Common fix on RHEL/Fedora (missing Podman DNS plugin or stale network):
+
+```bash
+sudo dnf -y install podman-plugins
+cd /opt/libretime
+sudo podman compose -f docker-compose.yml down
+sudo podman network rm libretime_default || true
+sudo podman compose -f docker-compose.yml up -d
+sudo podman exec libretime_api_1 python3 -c "import socket; print('nginx ->', socket.gethostbyname('nginx'))"
+```
+
+If the network name differs, list and inspect first:
+
+```bash
+sudo podman network ls
+sudo podman network inspect <network-name>
+```
+
 ### 2) Browser warning: `configured storage.path '/srv/libretime/' is not writable`
 
 Fix host permissions:

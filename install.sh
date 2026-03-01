@@ -101,14 +101,14 @@ esac
 
 echo "Installing container tooling..."
 if [[ "$ID" == "fedora" ]]; then
-  sudo dnf -y install podman podman-compose gettext curl openssl
+  sudo dnf -y install podman podman-compose podman-plugins gettext curl openssl
 elif [[ "${VERSION_ID%%.*}" == "8" ]]; then
   sudo dnf -y module install container-tools:el8
-  sudo dnf -y install podman-compose gettext curl openssl
+  sudo dnf -y install podman-compose podman-plugins gettext curl openssl
 elif [[ "${VERSION_ID%%.*}" == "9" ]]; then
-  sudo dnf -y install podman podman-compose gettext curl openssl
+  sudo dnf -y install podman podman-compose podman-plugins gettext curl openssl
 else
-  sudo dnf -y install container-tools podman-compose gettext curl openssl
+  sudo dnf -y install container-tools podman-compose podman-plugins gettext curl openssl
 fi
 
 if ! command -v podman >/dev/null 2>&1; then
