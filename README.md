@@ -32,8 +32,16 @@ This directory contains a scripted LibreTime deployment for RHEL-family distribu
 
 ## Quick start (interactive)
 
+Clone the repository and enter it:
+
 ```bash
-cd /home/psams/apps/libretime
+git clone https://github.com/aprxio/libretime_aarch64.git libretime_aarch64
+cd libretime_aarch64
+```
+
+Then run the installer:
+
+```bash
 chmod +x install.sh
 ./install.sh
 ```
@@ -51,8 +59,11 @@ Note: `storage.path` is fixed to `/srv/libretime` inside containers.
 
 ## Non-interactive install
 
+From the repository directory:
+
 ```bash
-cd /home/psams/apps/libretime
+git clone https://github.com/aprxio/libretime_aarch64.git libretime_aarch64
+cd libretime_aarch64
 PUBLIC_URL="https://radio.example.com" \
 TIMEZONE="UTC" \
 DATA_DIR="/data/libretime" \
